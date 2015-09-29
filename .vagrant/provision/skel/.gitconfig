@@ -1,0 +1,55 @@
+[user]
+[core]
+    editor = nano
+    excludesfile = ~/.gitignore
+    # Insanely beautiful diffs!
+    pager = diff-highlight | format-diff | less -r
+[alias]
+    line = log --oneline
+    s = status -s
+    st = status
+    df = diff --color --color-words --abbrev
+    graph = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+    co = checkout
+[push]
+    default = simple
+[branch]
+    autosetuprebase = always
+
+[color]
+    # WARNING: Do not set the following to "always". It will mess up your shell prompt (PS1)
+    # it you include Git information (such as the current branch).
+    ui = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[color "diff-highlight"]
+	oldNormal = "red bold"
+	oldHighlight = "red bold 52"
+	newNormal = "green bold"
+	newHighlight = "green bold 22"
+
+# URL Rewrites
+[url "git@github.com:"]
+    insteadOf = "gh:"
+    insteadOf = "git://github.com"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+    pushInsteadOf = "https://github.com/"
+[url "git@gist.github.com:"]
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+    pushInsteadOf = "https://gist.github.com/"
+[help]
+    autocorrect = 1
