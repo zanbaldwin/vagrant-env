@@ -1,0 +1,16 @@
+# Print a horizontal rule.
+rule ()
+{
+    printf "%$(tput cols)s\n"|tr " " "-"}}
+}
+color_code_regex="(\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K])"
+reset_color="\x1B\[m"
+dim_magenta="\x1B\[38;05;146m"
+# Simplify the unified patch diff header.
+sed -r "s/^($color_code_regex)diff --git .*$//g" | \
+sed -r "s/^($color_code_regex)index .*$/\1$(rule)/g" | \
+sed -r "s/^($color_code_regex)\+\+\+(.*)$/\1+++\5\n\1$(rule)\x1B\[m/g" |\
+# Extra color for @@ context line.
+sed -r "s/@@$reset_color $reset_color(.*$)/@@ $dim_magenta\1/g"  |\
+# Actually strips the leading symbols.
+sed -r "s/^($color_code_regex)[\+\-]/\1 /g"
