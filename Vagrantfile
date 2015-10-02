@@ -13,10 +13,12 @@ Vagrant.configure(2) do |config|
   ## machine (but your databases might get corrupted if you are using Windows).
   # config.vm.synced_folder "databases", "/var/lib/mysql"
 
-  # config.vm.provider "virtualbox" do |vb|
-  #   vb.gui = true
-  #   vb.memory = "1024"
-  # end
+  config.vm.provider "virtualbox" do |vb|
+    # PHP's composer uses quite a lot of memory, increasing this helps but make sure you keep it within the
+    # capabilities of the host machine you are running the Vagrant environment on.
+    # If Composer keeps failing (return code 137) with the message "Killed" try increasing the memory.
+    vb.memory = "2048"
+  end
 
   # config.push.define "atlas" do |push|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
@@ -49,9 +51,12 @@ Vagrant.configure(2) do |config|
     mv /tmp/nginx-site.conf /etc/nginx/sites-available/default
     mv /tmp/format-diff /usr/local/bin/format-diff
     chmod +x /usr/local/bin/format-diff
+    # Make sure that Composer's cache directory is owned by the right user.
+    sudo -u vagrant -H mkdir -p /home/vagrant/.composer/cache
     ## Restart the services that have had configuration updates.
     service mysql restart
     service php5-fpm restart
     service nginx restart
+    hostnamectl set-hostname php-vagrant-env
   SHELL
 end
