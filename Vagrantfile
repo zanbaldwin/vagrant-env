@@ -51,12 +51,11 @@ Vagrant.configure(2) do |config|
     mv /tmp/nginx-site.conf /etc/nginx/sites-available/default
     mv /tmp/format-diff /usr/local/bin/format-diff
     chmod +x /usr/local/bin/format-diff
-    # Make sure that Composer's cache directory is owned by the right user.
-    sudo -u vagrant -H mkdir -p /home/vagrant/.composer/cache
     ## Restart the services that have had configuration updates.
     service mysql restart
     service php5-fpm restart
     service nginx restart
+    ## Set the hostname to something more related to this project.
     hostnamectl set-hostname php-vagrant-env
   SHELL
 end
