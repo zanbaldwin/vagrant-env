@@ -54,7 +54,6 @@ Using the `info` example project, its domain would be [`info.vagrant`](http://in
 - Create the file `/etc/dnsmasq.d/vagranttld.conf` with the following contents:
 
 ```
-vagrant=/vagrant/
 address=/vagrant/192.168.84.78
 ```
 
